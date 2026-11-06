@@ -1278,8 +1278,8 @@ function draw(ctx, sim, k, o) {
       sign(ctx, 22, 24, true); haloText(ctx, '0.1 µC of positive charge, shown moving', 34, 29, COL.ink);
       sign(ctx, 22, 46, false); haloText(ctx, '0.1 µC of electrons', 34, 51, COL.ink);
     } else {
-      sign(ctx, 22, 24, true); haloText(ctx, '0.1 µC of positive charge: stays put', 34, 29, COL.ink);
-      sign(ctx, 22, 46, false); haloText(ctx, '0.1 µC of electrons: these move', 34, 51, COL.ink);
+      sign(ctx, 22, 24, true); haloText(ctx, '0.1 µC of positive charge', 34, 29, COL.ink);
+      sign(ctx, 22, 46, false); haloText(ctx, '0.1 µC of electrons', 34, 51, COL.ink);
     }
     if (capped) { ctx.font = `400 12px ${FONT}`; haloText(ctx, 'not all of the person’s charge is shown', 16, 72, '#56656f'); }
   }
