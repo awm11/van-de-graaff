@@ -1,22 +1,12 @@
 /* Layout: the generator scene on the left; controls and the readings on the
    right. Same look as the other simulations (pulleys etc.). */
 :root{
-  --bg:#e3eaed; --paper:#f6f9fa; --ink:#18232b; --muted:#56656f; --line:#c7d3d8;
-  --accent:#1b62c4; --accent-ink:#ffffff; --pos:#d23b30; --neg:#1b62c4; --spark:#6a4fd6;
+  /* dark colouring on every device, whatever the system's light/dark setting */
+  --bg:#0f171c; --paper:#172229; --ink:#e4edf1; --muted:#9aabb5; --line:#2b3a43;
+  --accent:#5b9bf0; --accent-ink:#0b1620; --pos:#ff7a6e; --pos-person:#ffa45e; --neg:#7fb2ff; --spark:#b5a3ff;
+  color-scheme:dark;
   box-sizing:border-box;
   padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
-}
-@media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]){
-    --bg:#0f171c; --paper:#172229; --ink:#e4edf1; --muted:#9aabb5; --line:#2b3a43;
-    --accent:#5b9bf0; --accent-ink:#0b1620; --pos:#ff7a6e; --neg:#7fb2ff; --spark:#b5a3ff;
-    color-scheme:dark;
-  }
-}
-:root[data-theme="dark"]{
-  --bg:#0f171c; --paper:#172229; --ink:#e4edf1; --muted:#9aabb5; --line:#2b3a43;
-  --accent:#5b9bf0; --accent-ink:#0b1620; --pos:#ff7a6e; --neg:#7fb2ff; --spark:#b5a3ff;
-  color-scheme:dark;
 }
 *,*::before,*::after{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--ink);font-family:"Atkinson Hyperlegible","Segoe UI",system-ui,sans-serif;font-size:16px;line-height:1.5}
@@ -24,12 +14,12 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:"Atkinson Hyperl
 
 /* Header */
 .top{position:relative;text-align:center}
-.title-block{max-width:720px;margin:0 auto}
-.top h1{font-family:"Bricolage Grotesque","Atkinson Hyperlegible",system-ui,sans-serif;font-weight:800;font-size:clamp(28px,4.2vw,46px);line-height:1.05;letter-spacing:-0.02em;margin:0 0 8px;text-wrap:balance}
-.lede{margin:0 auto 14px;color:var(--muted);font-size:18px;max-width:80ch}
-.favicon-link{position:absolute;top:0;right:6px;display:inline-block;line-height:0;transition:transform .2s ease}
+.title-block{max-width:780px;margin:0 auto}
+.top h1{font-family:"Plus Jakarta Sans","Atkinson Hyperlegible",system-ui,sans-serif;font-weight:800;font-size:clamp(28px,4.2vw,46px);line-height:1.05;letter-spacing:-0.02em;margin:0 0 8px;text-wrap:balance}
+.lede{margin:0 auto 14px;color:var(--muted);font-size:18px;max-width:none;text-wrap:balance}   /* one line where there is room; balanced lines where there is not */
+.favicon-link{position:absolute;top:6px;right:16px;display:inline-block;line-height:0;transition:transform .2s ease}
 .favicon-link:hover,.favicon-link:focus-visible{transform:scale(1.15) rotate(10deg)}
-.favicon-img{width:58px;height:58px;display:block}
+.favicon-img{width:62px;height:62px;display:block}
 
 /* Full screen button, top left of the header */
 .btn.iconbtn{display:inline-grid;place-items:center;width:48px;height:48px;padding:0;line-height:0}
@@ -42,31 +32,26 @@ html.pseudo-fs .app>*{max-width:1240px;margin-left:auto;margin-right:auto}
 
 /* Main grid */
 /* the scene grows to fill the height of the window; the side panel is only as wide as its buttons */
-.layout{display:grid;grid-template-columns:minmax(0,var(--stage-w,calc((100vh - 200px) * 720 / 780))) var(--side-w,372px);gap:22px;align-items:start;justify-content:center}
+.layout{display:grid;grid-template-columns:minmax(0,var(--stage-w,calc((100vh - 200px) * 800 / 780))) var(--side-w,372px);gap:22px;align-items:start;justify-content:center}
 .stagecol{min-width:0}
 .stage{position:relative;container-type:inline-size;border-radius:14px;overflow:hidden;box-shadow:0 0 0 1px var(--line);background:#dfe8ec}
 .stage canvas{display:block;width:100%;height:auto;max-width:100%;touch-action:none;-webkit-user-select:none;user-select:none}
 .side{min-width:0;display:flex;flex-direction:column;gap:14px}
 /* long text wraps to the width the buttons need, rather than widening the panel */
-.hint,.ctl-note,.note,.readtbl{contain:inline-size}
-.actions .hint{flex:1 1 100%}
+.note,.readtbl{contain:inline-size}
 
 /* Cards */
 .fig{margin:0;background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:14px 16px;min-width:0}
 .controls{display:flex;flex-direction:column;gap:12px}
-.ctl{display:grid;grid-template-columns:auto auto;justify-content:start;align-items:center;gap:6px 12px}
+.ctl{display:grid;grid-template-columns:auto 1fr;justify-content:start;align-items:center;gap:6px 12px}
 .ctl-label{font-weight:700;font-size:14.5px;min-width:70px}
-.ctl-note{grid-column:2;color:var(--muted);font-size:13.5px}
 .ctl-row{display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:10px 12px;padding-top:12px;border-top:1px solid var(--line)}
-.actions{display:flex;flex-wrap:wrap;gap:9px;align-items:center}
-.hint{margin:0;color:var(--muted);font-size:13.5px;line-height:1.45}
 
 /* Buttons and switches */
 .btn{font:inherit;font-weight:700;font-size:14.5px;padding:8px 14px;border-radius:999px;border:1.5px solid var(--line);background:var(--paper);color:var(--ink);cursor:pointer;-webkit-user-select:none;user-select:none;touch-action:manipulation}
 .btn:hover:not(:disabled){border-color:var(--accent)}
 .btn:active:not(:disabled){background:var(--line)}
 .btn:disabled{opacity:.55;cursor:default}
-.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
 .btn.ghost{background:transparent}
 button:focus-visible,input:focus-visible,a:focus-visible,canvas:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
 .swgroup{display:flex;align-items:center;gap:6px;font:inherit;font-weight:700;font-size:14px;color:var(--ink);cursor:pointer;white-space:nowrap}
@@ -92,19 +77,11 @@ button:focus-visible,input:focus-visible,a:focus-visible,canvas:focus-visible{ou
 .seg.on{background:var(--ink);color:var(--paper)}
 
 /* Belt speed slider */
-.speed{display:flex;align-items:center;gap:12px;min-width:0}
-.speed output{font-weight:700;font-size:16px;font-variant-numeric:tabular-nums;min-width:68px;text-align:right}
-.range{-webkit-appearance:none;appearance:none;width:220px;max-width:100%;height:22px;background:transparent;cursor:pointer;margin:0}
-.range::-webkit-slider-runnable-track{height:6px;border-radius:999px;background:linear-gradient(to right,var(--accent) 0 var(--fill,40%),var(--line) var(--fill,40%) 100%)}
-.range::-moz-range-track{height:6px;border-radius:999px;background:var(--line)}
-.range::-moz-range-progress{height:6px;border-radius:999px;background:var(--accent)}
-.range::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:22px;height:22px;margin-top:-8px;border-radius:50%;background:var(--paper);border:2px solid var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.3)}
-.range::-moz-range-thumb{width:18px;height:18px;border-radius:50%;background:var(--paper);border:2px solid var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.3)}
 
 /* the controls panel always uses the light-mode colours */
 .fig.controls{
   --bg:#e3eaed; --paper:#f6f9fa; --ink:#18232b; --muted:#56656f; --line:#c7d3d8;
-  --accent:#1b62c4; --accent-ink:#ffffff; --pos:#d23b30; --neg:#1b62c4; --spark:#6a4fd6;
+  --accent:#1b62c4; --accent-ink:#ffffff; --pos:#d23b30; --pos-person:#d8691c; --neg:#1b62c4; --spark:#6a4fd6;
   color-scheme:light; background:var(--paper); color:var(--ink); border-color:var(--line);
 }
 
@@ -125,14 +102,24 @@ button:focus-visible,input:focus-visible,a:focus-visible,canvas:focus-visible{ou
 .read tr:last-child th,.read tr:last-child td{border-bottom:0}
 .read tr.big td{font-size:21px}
 .read .pos{color:var(--pos)}
-/* p.d. meter: 0 to 300 kV */
+.read .pos.person{color:var(--pos-person)}
+/* p.d. meter: 0 to V_SCALE (350 kV); each scale label sits at the start of its 100 kV stretch */
 .meter{position:relative;height:9px;border-radius:999px;background:var(--line);overflow:hidden;margin:2px 2px 0}
 .meter span{position:absolute;inset:0 auto 0 0;background:var(--pos);border-radius:999px}
-.meter-scale{display:flex;justify-content:space-between;margin:3px 2px 4px;color:var(--muted);font-size:11.5px;font-variant-numeric:tabular-nums}
+.meter.person span{background:var(--pos-person)}
+.meter-scale{display:flex;margin:3px 2px 4px;color:var(--muted);font-size:11.5px;font-variant-numeric:tabular-nums}
+.meter-scale span{white-space:nowrap}
 .note{margin:8px 0 0;color:var(--muted);font-size:13px;line-height:1.45}
 
 /* Footer and links */
-.bottom-block{display:flex;align-items:center;justify-content:space-between;gap:16px 24px;flex-wrap:wrap;margin-top:14px}
+.bottom-block{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:16px 24px;margin-top:14px}
+/* the note sits in the middle, between "See other simulations" and the coffee button */
+.bottom-note{display:flex;flex-direction:column;align-items:center;gap:4px;text-align:center}
+.bottom-note .more-sims-note{max-width:none;text-wrap:balance}
+.bottom-note a{color:var(--accent);text-decoration:underline;text-underline-offset:2px}
+@media (max-width:640px){
+  .bottom-block{grid-template-columns:1fr;justify-items:center}
+}
 .more-block{display:flex;flex-direction:column;align-items:flex-start;gap:6px;text-align:left}
 .more-sims{display:inline-flex;align-items:center;gap:8px;font-weight:700;font-size:15px;color:var(--ink);text-decoration:none}
 .more-sims:hover,.more-sims:focus-visible{color:var(--accent)}
@@ -155,16 +142,50 @@ button:focus-visible,input:focus-visible,a:focus-visible,canvas:focus-visible{ou
 }
 @media (max-width:640px){
   .app{padding-block:18px 24px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
-  .favicon-img{width:42px;height:42px}
+  .favicon-img{width:45px;height:45px}
   .top h1{padding:0 36px}
   .ctl{grid-template-columns:1fr}
-  .ctl-note{grid-column:1}
   .loadpick{min-width:0;padding:6px 5px 5px;font-size:14px}
-  .range{width:100%;flex:1 1 auto}
-  .speed{width:100%}
 }
 @media (prefers-reduced-motion: reduce){
   .favicon-link,.more-sims-icon,.coffee-embed-frame{transition:none}
 }
 
 .stage .stagebtn{position:absolute;left:10px;bottom:10px;background:var(--paper);box-shadow:0 1px 4px rgba(0,0,0,.25)}
+
+/* belt-speed slider, laid over the front of the generator's base in the scene */
+.belt-range{position:absolute;margin:0;transform:translateY(-50%);height:max(18px,3.4cqw);-webkit-appearance:none;appearance:none;background:transparent;cursor:pointer;--thumb:clamp(12px,2.4cqw,22px)}
+.belt-range:focus-visible{outline:2px solid #ffb020;outline-offset:2px;border-radius:999px}
+.belt-range::-webkit-slider-runnable-track{height:4px;border-radius:999px;background:linear-gradient(to right,#3ccf63 0 var(--fill,40%),#59636c var(--fill,40%) 100%)}
+.belt-range::-moz-range-track{height:4px;border-radius:999px;background:#59636c}
+.belt-range::-moz-range-progress{height:4px;border-radius:999px;background:#3ccf63}
+.belt-range::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:var(--thumb);height:var(--thumb);margin-top:calc(2px - var(--thumb) / 2);border-radius:50%;background:#e8edf0;border:1.5px solid #1f262c;box-shadow:0 1px 3px rgba(0,0,0,.4)}
+.belt-range::-moz-range-thumb{width:var(--thumb);height:var(--thumb);border-radius:50%;background:#e8edf0;border:1.5px solid #1f262c;box-shadow:0 1px 3px rgba(0,0,0,.4)}
+.belt-range:hover::-webkit-slider-thumb{box-shadow:0 0 10px 2px rgba(255,176,32,.9)}
+.belt-range:hover::-moz-range-thumb{box-shadow:0 0 10px 2px rgba(255,176,32,.9)}
+
+/* switches sit in two columns; a long label wraps onto a second line rather than taking a row of its own */
+.ctl-row .swgroup{white-space:normal;line-height:1.2}
+
+/* "What is happening": the same card as the readings; the point that describes what's going on
+   right now is picked out in the accent colour */
+.happen ul{list-style:none;margin:6px 0 0;padding:0;contain:inline-size}
+.happen li{position:relative;color:var(--muted);font-size:13.5px;line-height:1.45;padding:5px 8px 5px 22px;border-radius:8px;transition:color .3s,background-color .3s}
+.happen li::before{content:"";position:absolute;left:9px;top:12px;width:5px;height:5px;border-radius:50%;background:var(--line);transition:background-color .3s}
+.happen li.on{color:var(--ink);background:color-mix(in srgb,var(--accent) 12%,transparent)}
+.happen li.on::before{background:var(--accent)}
+
+/* buttons for the scene's clickable things, for keyboard and screen-reader users: hidden until focused */
+.kbd-actions{position:absolute;top:10px;right:10px;display:flex;gap:6px}
+.kbd-actions .btn{background:var(--paper);box-shadow:0 1px 4px rgba(0,0,0,.25)}
+.kbd-actions .btn:not(:focus):not(:focus-visible){position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;border:0}
+.kbd-actions .btn[aria-disabled]{opacity:.55;cursor:default}
+
+/* a minimised card: the whole header opens it, and its button is a filled "+ Show" pill so it's easy to spot */
+.fig.min .fighead{cursor:pointer}
+.minbtn[aria-expanded="false"]{width:auto;gap:6px;padding:0 12px 0 10px;grid-auto-flow:column;border-radius:999px;background:var(--accent);border-color:var(--accent);color:var(--accent-ink);font:inherit;font-weight:700;font-size:13.5px}
+.minbtn[aria-expanded="false"]:hover{filter:brightness(1.1)}
+.fig.min .fighead:hover .minbtn[aria-expanded="false"]{filter:brightness(1.1)}
+
+/* the slider appears with the scene, not before it */
+.belt-range.waiting{visibility:hidden}
